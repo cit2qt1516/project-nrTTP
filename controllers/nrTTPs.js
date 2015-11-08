@@ -11,16 +11,6 @@ exports.findAllnrTTP = function (req, res) {
     });
 };
 
-//GET by ID
-exports.findById = function (req, res) {
-    NrTTP.findById(req.params.id, function (err, nrTTP) {
-        if (err) return res.send(500, err.message);
-
-        console.log('GET /nrTTP/' + req.params.id);
-        res.status(200).jsonp(nrTTP);
-    });
-};
-
 //POST -
 exports.addNrTTP = function (req, res) {
     console.log('PASO 3 + PASO 4');
@@ -55,6 +45,27 @@ exports.addNrTTP = function (req, res) {
     });
 };
 
+// A gets its Origin Proof
+exports.getPO = function (req, res) {
+    console.log('PASO 0 (Prueba Origen A)');
+
+    var prueba = (req.body.identificador2 + "-" + req.body.paso + "-" + req.body.contenido);
+
+    res.status(200).jsonp(prueba);
+};
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+
+//GET by ID
+exports.findById = function (req, res) {
+    NrTTP.findById(req.params.id, function (err, nrTTP) {
+        if (err) return res.send(500, err.message);
+
+        console.log('GET /nrTTP/' + req.params.id);
+        res.status(200).jsonp(nrTTP);
+    });
+};
+
 //PUT - Update a register already exists
 exports.updateNrTTP = function (req, res) {
     NrTTP.findOneAndUpdate(req.params.id, function (err, nrttp) {
@@ -86,13 +97,4 @@ exports.deleteNrTTP = function (req, res) {
         })
     });
     res.status(200).send('Delete');
-};
-
-// A gets its Origin Proof
-exports.getPO = function (req, res) {
-    console.log('PASO 0 (Prueba Origen A)');
-
-    var prueba = (req.body.identificador2 + "-" + req.body.paso + "-" + req.body.contenido);
-
-    res.status(200).jsonp(prueba);
 };
