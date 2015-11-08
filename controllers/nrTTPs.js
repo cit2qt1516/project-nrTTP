@@ -1,26 +1,23 @@
-/**
- * Created by Administrador on 03/11/2015.
- */
 var mongoose = require('mongoose');
 var NrTTP = mongoose.model('nrMessage');
 
 //GET All
 exports.findAllnrTTP = function(req, res) {
-    NrTTP.find(function(err, nrb) {
+    NrTTP.find(function(err, nrTTP) {
         if(err) res.send(500, err.message);
 
-        console.log('GET /nrb')
-        res.status(200).jsonp(nrb);
+        console.log('GET /nrTTP');
+        res.status(200).jsonp(nrTTP);
     });
 };
 
 //GET by ID
 exports.findById = function(req, res) {
-    NrTTP.findById(req.params.id, function(err, nrb) {
+    NrTTP.findById(req.params.id, function(err, nrTTP) {
         if(err) return res.send(500, err.message);
 
-        console.log('GET /nrb/' + req.params.id);
-        res.status(200).jsonp(nrb);
+        console.log('GET /nrTTP/' + req.params.id);
+        res.status(200).jsonp(nrTTP);
     });
 };
 
