@@ -47,3 +47,6 @@ nrTTPs.route('/nrttp/:id')
     .get(NrBController.findById)
     .put(NrBController.updateNrTTP)
     .delete(NrBController.deleteNrTTP);
+
+nrTTPs.route('/nra')
+    .post(NrBController.getPO);

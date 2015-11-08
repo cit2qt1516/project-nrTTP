@@ -1,6 +1,3 @@
-/**
- * Created by Administrador on 03/11/2015.
- */
 exports = module.exports = function(app, mongoose) {
 
     var nrMessageSchema = new mongoose.Schema({
@@ -12,5 +9,4 @@ exports = module.exports = function(app, mongoose) {
     });
 
     mongoose.model('nrMessage', nrMessageSchema);
-
 };
