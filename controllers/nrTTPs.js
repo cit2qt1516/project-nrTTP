@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var bignum = require('bignum');
 var NrTTP = mongoose.model('nrMessage');
 
 //GET All
@@ -49,7 +50,10 @@ exports.addNrTTP = function (req, res) {
 exports.getPO = function (req, res) {
     console.log('PASO 0 (Prueba Origen A)');
 
-    var prueba = (req.body.identificador2 + "-" + req.body.paso + "-" + req.body.contenido);
+    var prime = bignum.prime(256, true);
+    var prime1 = bignum.prime(256, true);
+    var prueba = (req.body.identificador2 + "-" + req.body.paso + "-" + req.body.contenido + " -> " + prime*prime1);
+
 
     res.status(200).jsonp(prueba);
 };
