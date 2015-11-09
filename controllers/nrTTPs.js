@@ -27,23 +27,16 @@ exports.addNrTTP = function (req, res) {
         prueba: prueba
     });
 
-    nrTTP.save(function (err, nrttp) {
-        if (err) {
-            return res.send(500, err.message);
-        } else {
-            var paso3 = nrttp.paso + 1;
-            var prueba3 = (nrttp.identificador1 + "-" + nrttp.identificador2 + paso3 + "-" + nrttp.contenido);
-            var nrAll = new NrTTP({
-                identificador1: nrttp.identificador1,
-                identificador2: nrttp.identificador2,
-                paso: paso3,
-                prueba: prueba3
-            })
-            nrAll.save();
-            res.status(200).jsonp(nrAll);
-        }
-
-    });
+    var paso3 = nrttp.paso + 1;
+    var prueba3 = (nrttp.identificador1 + "-" + nrttp.identificador2 + paso3 + "-" + nrttp.contenido);
+    var nrAll = new NrTTP({
+        identificador1: nrttp.identificador1,
+        identificador2: nrttp.identificador2,
+        paso: paso3,
+        prueba: prueba3
+    })
+    
+    res.status(200).jsonp(nrAll);
 };
 
 // A gets its Origin Proof
@@ -52,7 +45,7 @@ exports.getPO = function (req, res) {
 
     var prime = bignum.prime(256, true);
     var prime1 = bignum.prime(256, true);
-    var prueba = (req.body.identificador2 + "-" + req.body.paso + "-" + req.body.contenido + " -> " + prime*prime1);
+    var prueba = (req.body.identificador2 + "-" + req.body.paso + "-" + req.body.contenido + " -> " + prime * prime1);
 
 
     res.status(200).jsonp(prueba);
