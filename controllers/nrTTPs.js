@@ -35,7 +35,7 @@ exports.addNrTTP = function (req, res) {
         paso: paso3,
         prueba: prueba3
     })
-    
+
     res.status(200).jsonp(nrAll);
 };
 
