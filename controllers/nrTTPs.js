@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var bignum = require('bignum');
+var sha256 = require('sha256');
 var NrTTP = mongoose.model('nrMessage');
+var RSA = require('./rsa');
 
 //GET All
 exports.findAllnrTTP = function (req, res) {
@@ -43,12 +45,32 @@ exports.addNrTTP = function (req, res) {
 exports.getPO = function (req, res) {
     console.log('PASO 0 (Prueba Origen A)');
 
-    var prime = bignum.prime(256, true);
-    var prime1 = bignum.prime(256, true);
-    var prueba = (req.body.identificador2 + "-" + req.body.paso + "-" + req.body.contenido + " -> " + prime * prime1);
+    var hash = sha256(req.body.contenido);
+    var proof = (req.body.identificador2 + "-" + req.body.paso + "-" + hash);
 
+    var bytes = "";
+    for (var i = 0; i < proof.length; i++) {
+        bytes += proof.charCodeAt(i);
+    }
 
-    res.status(200).jsonp(prueba);
+    var keysA = RSA.generateKeys(128);
+    var b = bignum(bytes);
+    console.log("Original: " + b);
+    var x = keysA.privateKey.encryptPrK(b);
+    console.log("Codificado: " + x);
+    var y = keysA.publicKey.decryptPuK(x);
+    console.log("Descodificado: " + y);
+
+    // EXAMPLE OF ENCRYPTING
+    /*var keysA = RSA.generateKeys(128);
+    var b = bignum('111');
+    console.log(b);
+    var x = keysA.privateKey.encryptPrK(b);
+    console.log(x);
+    var y = keysA.publicKey.decryptPuK(x);
+    console.log(y);*/
+
+    res.status(200).jsonp(proof);
 };
 
 /* ---------------------------------------------------------------------------------------------------------------- */
